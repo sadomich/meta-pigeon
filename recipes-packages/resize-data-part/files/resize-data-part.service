@@ -1,0 +1,16 @@
+[Unit]
+Description=Service to fix backup GPT header and resize data partition to utilize all unallocated disk space
+DefaultDependencies=no
+Before=data.mount
+Before=systemd-growfs@data.service
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+ExecCondition=sh -c "/usr/sbin/sgdisk -v /dev/mmcblk0 | /bin/grep -zqoP \"Problem: The secondary header's self-pointer indicates that it doesn't reside\\nat the end of the disk\""
+ExecStartPre=/usr/sbin/sgdisk -e /dev/mmcblk0
+ExecStart=/usr/sbin/parted -s /dev/mmcblk0 resizepart 3 100%
+
+[Install]
+WantedBy=data.mount

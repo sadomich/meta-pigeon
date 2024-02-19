@@ -1,0 +1,11 @@
+
+# The mmc storage layout:
+# --------------------------
+# | boot | rootfs |  data  |
+# --------------------------
+
+bootloader --ptable gpt
+
+part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 20
+part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 4096
+part /data --fixed-size 16M --ondisk mmcblk0 --fstype=ext4 --label data --align 4096 --fsoptions "defaults,x-systemd.growfs" --no-fstab-update
