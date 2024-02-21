@@ -63,7 +63,7 @@ repo sync --no-clone-bundle
 
 ### Configure the Pigeon Yocto Project:
 ```shell
-TEMPLATECONF=../meta-pigeon/conf/samples . sources/poky/oe-init-build-env build/
+TEMPLATECONF=../meta-pigeon/conf/templates/default . sources/poky/oe-init-build-env build/
 ```
 
 ### Build for a specific pigeon machine for example:
